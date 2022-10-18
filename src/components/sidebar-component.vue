@@ -56,7 +56,7 @@ export default {
         },
         {
           id: 3,
-          title: 'Росклад',
+          title: 'Розклад',
           icon: 'calendar2-week-fill',
           path: '#'
         },
@@ -73,13 +73,13 @@ export default {
           path: '#'
         },
         {
-          id: 5,
+          id: 6,
           title: 'Аналітика',
           icon: 'pie-chart-fill',
           path: '#'
         },
         {
-          id: 5,
+          id: 7,
           title: 'Модулі',
           icon: 'speedometer',
           path: '#'

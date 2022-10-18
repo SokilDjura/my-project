@@ -1,11 +1,19 @@
 <template>
-  <div></div>
+  <div>
+    <header-component/>
+    <sidebar-component/>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: 'HomeView',
+import HeaderComponent from '@/components/header-component'
+import SidebarComponent from '@/components/sidebar-component'
 
-    components: {},
+export default {
+  name: 'HomeView',
+  components: {
+    HeaderComponent,
+    SidebarComponent
   }
+}
 </script>

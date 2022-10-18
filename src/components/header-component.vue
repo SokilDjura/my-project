@@ -22,7 +22,11 @@
           <b-icon class='me-1' icon='card-checklist'/>
           Послуга
         </b-button>
-        <b-button class='header-btn-center px-4' variant="primary">
+        <b-button
+          class='header-btn-center px-4'
+          variant="primary"
+          @click='getGoods'
+        >
           <b-icon class='me-1' icon='basket2-fill'/>
           Товар
         </b-button>
@@ -32,12 +36,34 @@
         </b-button>
       </b-button-group>
     </div>
+    <goods-modal
+      :is-open='isGoodsModalOpen'
+      @close-modal='closeGoodsModal'
+    />
   </header>
 </template>
 
 <script>
+import goodsModal from '@/components/modals/goods-modal'
+
 export default {
   name: 'HeaderComponent',
+  components: {
+    goodsModal
+  },
+  data() {
+    return {
+      isGoodsModalOpen: false
+    }
+  },
+  methods: {
+    getGoods() {
+      this.isGoodsModalOpen = true
+    },
+    closeGoodsModal() {
+      this.isGoodsModalOpen = false
+    }
+  }
 }
 </script>
 
