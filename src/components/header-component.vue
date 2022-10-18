@@ -7,7 +7,7 @@
         <b-icon class='mx-2' font-scale='1.3' icon='bell-fill'/>
         <b-icon class='mx-2' font-scale='1.3' icon='question-circle-fill'/>
       </div>
-      <div class='w-50 me-auto'>
+      <b-col lg='4' xl='5' class=' me-auto'>
         <b-input-group>
           <b-input class='search-input' placeholder='Пошук'/>
           <template #append>
@@ -16,9 +16,9 @@
             </b-input-group-text>
           </template>
         </b-input-group>
-      </div>
+      </b-col>
       <b-button-group class='button-group-wrap'>
-        <b-button class='px-4' variant="primary">
+        <b-button class='px-4' variant="primary" @click='isOpenServicesModal=!isOpenServicesModal'>
           <b-icon class='me-1' icon='card-checklist'/>
           Послуга
         </b-button>
@@ -35,6 +35,8 @@
           Запись
         </b-button>
       </b-button-group>
+      <services-modal :is-open='isOpenServicesModal' @nextModal='nextModal()' />
+      <clients-modal :is-open='isOpenClientsModal' @closeModal='isOpenClientsModal = false' />
     </div>
     <goods-modal
       :is-open='isGoodsModalOpen'
@@ -44,25 +46,34 @@
 </template>
 
 <script>
-import goodsModal from '@/components/modals/goods-modal'
-
+import ServicesModal from '@/components/modals/services-modal'
+import ClientsModal from '@/components/modals/clients-modal'
+import GoodsModal from '@/components/modals/goods-modal'
 export default {
   name: 'HeaderComponent',
   components: {
-    goodsModal
+    ServicesModal,
+    ClientsModal,
+    GoodsModal
   },
-  data() {
-    return {
+  data(){
+    return{
+      isOpenServicesModal: false,
+      isOpenClientsModal: false,
       isGoodsModalOpen: false
     }
   },
-  methods: {
+  methods:{
+    nextModal(){
+      this.isOpenServicesModal = false
+      this.isOpenClientsModal = true
+    },
     getGoods() {
       this.isGoodsModalOpen = true
     },
     closeGoodsModal() {
       this.isGoodsModalOpen = false
-    }
+	}
   }
 }
 </script>
