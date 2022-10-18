@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const MainLayout = () => import(/* webpackChunkName: "main-layout" */ '@/views/layouts/MainLayout')
+const DashboardPage = () => import(/* webpackChunkName: "dashboard-page" */ '@/views/pages/dashboard/DashboardPage')
 const AuthLayout = () => import(/* webpackChunkName: "auth-layout" */ '@/views/layouts/AuthLayout')
 const LoginPage = () => import(/* webpackChunkName: "login-page" */ '@/views/pages/auth/LoginPage')
 
@@ -24,7 +25,14 @@ const routes = [
   },
   {
     path: '',
-    component: MainLayout
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        name: 'DashboardPage',
+        component: DashboardPage
+      }
+    ]
   }
 ]
 

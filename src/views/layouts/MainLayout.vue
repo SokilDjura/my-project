@@ -2,6 +2,9 @@
   <div>
     <header-component/>
     <sidebar-component/>
+    <div class='page-content'>
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -17,3 +20,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.page-content {
+  padding-left: 80px;
+}
+</style>
