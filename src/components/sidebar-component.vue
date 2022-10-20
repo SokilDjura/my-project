@@ -2,6 +2,7 @@
   <b-sidebar
     :visible='true'
     backdrop-variant='dark'
+    no-close-on-route-change
     no-header
     shadow
     width='80px'
@@ -23,11 +24,13 @@
     </div>
     <hr class='my-2'/>
     <b-button
-      v-for='item in sidebarButtons' :key='item.id'
+      v-for='item in sidebarButtons'
+      :key='item.id'
+      :to='{name: `${item.path}`}'
       class='px-1 my-1 mx-auto d-flex flex-column align-items-center sidebar-button'
       variant='light'
     >
-      <b-icon :icon='item.icon' font-scale='1.5' class='mb-1'></b-icon>
+      <b-icon :icon='item.icon' class='mb-1' font-scale='1.5'></b-icon>
       <small>{{ item.title }}</small>
     </b-button>
     <b-modal id='modal-1' title='BootstrapVue'>
@@ -46,43 +49,43 @@ export default {
           id: 1,
           title: 'Повістка',
           icon: 'house-fill',
-          path: '#'
+          path: 'DashboardPage'
         },
         {
           id: 2,
           title: 'Відмітка',
           icon: 'person-check-fill',
-          path: '#'
+          path: 'CheckPage'
         },
         {
           id: 3,
           title: 'Розклад',
           icon: 'calendar2-week-fill',
-          path: '#'
+          path: ''
         },
         {
           id: 4,
           title: 'Таблиці',
           icon: 'table',
-          path: '#'
+          path: ''
         },
         {
           id: 5,
           title: 'Воронка',
           icon: 'graph-up',
-          path: '#'
+          path: ''
         },
         {
           id: 6,
           title: 'Аналітика',
           icon: 'pie-chart-fill',
-          path: '#'
+          path: ''
         },
         {
           id: 7,
           title: 'Модулі',
           icon: 'speedometer',
-          path: '#'
+          path: ''
         }
       ]
     }
@@ -100,7 +103,7 @@ export default {
 .btn-exit {
   cursor: pointer;
 }
-.sidebar-button{
+.sidebar-button {
   width: 76px;
 }
 </style>
