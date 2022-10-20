@@ -26,6 +26,7 @@
       v-for='item in sidebarButtons' :key='item.id'
       class='px-1 my-1 mx-auto d-flex flex-column align-items-center sidebar-button'
       variant='light'
+      :to='{name: `${item.path}`}'
     >
       <b-icon :icon='item.icon' font-scale='1.5' class='mb-1'></b-icon>
       <small>{{ item.title }}</small>
@@ -52,7 +53,7 @@ export default {
           id: 2,
           title: 'Відмітка',
           icon: 'person-check-fill',
-          path: '#'
+          path: 'CheckVisitsPage'
         },
         {
           id: 3,

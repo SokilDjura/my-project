@@ -5,6 +5,7 @@ const MainLayout = () => import(/* webpackChunkName: "main-layout" */ '@/views/l
 const DashboardPage = () => import(/* webpackChunkName: "dashboard-page" */ '@/views/pages/dashboard/DashboardPage')
 const AuthLayout = () => import(/* webpackChunkName: "auth-layout" */ '@/views/layouts/AuthLayout')
 const LoginPage = () => import(/* webpackChunkName: "login-page" */ '@/views/pages/auth/LoginPage')
+const CheckVisitsPage = () => import(/* webpackChunkName: "login-page" */ '@/views/pages/checkVisits/CheckVisitsPage')
 
 Vue.use(VueRouter)
 
@@ -31,7 +32,12 @@ const routes = [
         path: '',
         name: 'DashboardPage',
         component: DashboardPage
-      }
+      },
+      {
+        path: 'check_visits',
+        name: 'CheckVisitsPage',
+        component: CheckVisitsPage
+      },
     ]
   }
 ]
