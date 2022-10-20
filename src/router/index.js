@@ -6,7 +6,6 @@ const DashboardPage = () => import(/* webpackChunkName: "dashboard-page" */ '@/v
 const CheckPage = () => import(/* webpackChunkName: "check-page" */ '@/views/pages/check/CheckPage')
 const AuthLayout = () => import(/* webpackChunkName: "auth-layout" */ '@/views/layouts/AuthLayout')
 const LoginPage = () => import(/* webpackChunkName: "login-page" */ '@/views/pages/auth/LoginPage')
-const CheckVisitsPage = () => import(/* webpackChunkName: "login-page" */ '@/views/pages/checkVisits/CheckVisitsPage')
 
 Vue.use(VueRouter)
 

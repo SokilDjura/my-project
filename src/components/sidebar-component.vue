@@ -29,7 +29,6 @@
       :to='{name: `${item.path}`}'
       class='px-1 my-1 mx-auto d-flex flex-column align-items-center sidebar-button'
       variant='light'
-      :to='{name: `${item.path}`}'
     >
       <b-icon :icon='item.icon' class='mb-1' font-scale='1.5'></b-icon>
       <small>{{ item.title }}</small>

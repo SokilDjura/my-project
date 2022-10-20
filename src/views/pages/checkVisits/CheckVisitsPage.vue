@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'CheckVisitsPage'
+  name: 'CheckPage'
 }
 </script>
 
