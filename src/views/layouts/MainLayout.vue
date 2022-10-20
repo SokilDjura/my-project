@@ -23,6 +23,7 @@ export default {
 
 <style scoped>
 .page-content {
-  padding-left: 80px;
+  padding-top: 80px;
+  padding-left: 100px;
 }
 </style>
