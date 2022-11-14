@@ -84,6 +84,8 @@ header {
   padding-left: 80px;
   position: fixed;
   width: 100%;
+  z-index: 2;
+  background-color: #fff;
 }
 .header-wrap {
   padding: 8px 12px;

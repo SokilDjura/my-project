@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 const MainLayout = () => import(/* webpackChunkName: "main-layout" */ '@/views/layouts/MainLayout')
 const DashboardPage = () => import(/* webpackChunkName: "dashboard-page" */ '@/views/pages/dashboard/DashboardPage')
@@ -31,12 +32,18 @@ const routes = [
       {
         path: '',
         name: 'DashboardPage',
-        component: DashboardPage
+        component: DashboardPage,
+        meta: {
+          authRequired: true
+        }
       },
       {
         path: '/check',
         name: 'CheckPage',
-        component: CheckPage
+        component: CheckPage,
+        meta: {
+          authRequired: true
+        }
       }
     ]
   }
@@ -46,6 +53,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((routeTo, routeFrom, next) => {
+  const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
+  if (!authRequired) next()
+  if (!store.getters['authStore/isLogged'] && authRequired) {
+    next({ name: 'LoginPage' })
+  }
+  const hideForAuth = routeTo.matched.some((route) => route.meta.hideForAuth)
+  if (store.getters['authStore/isLogged'] && hideForAuth) {
+    next({ name: 'DashboardPage' })
+  }
+  next()
 })
 
 export default router
