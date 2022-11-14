@@ -80,6 +80,7 @@ export default {
 
 <style scoped>
 header {
+  z-index: 1000;
   padding-left: 80px;
   position: fixed;
   width: 100%;

@@ -80,8 +80,7 @@ export default {
   }
 }
 </script>
-
-<style scoped>
+<style>
 .modal-header .btn-close {
   padding: 0 !important;
   margin: 0 !important;
@@ -89,8 +88,6 @@ export default {
 .modal-header .btn-close:hover {
   background-color: transparent !important;
 }
-</style>
-<style>
 .clients-model .modal-body{
   padding: 12px 16px;
 }
