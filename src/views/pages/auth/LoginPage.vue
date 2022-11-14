@@ -55,7 +55,8 @@
 
 <script>
 import LoaderBtn from '@/components/loader-btn'
-import { email, minLength, required } from 'vuelidate/lib/validators'
+import { minLength, required } from 'vuelidate/lib/validators'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginPage',
@@ -65,7 +66,8 @@ export default {
   data: () => ({
     user: {
       email: '',
-      password: ''
+      password: '',
+      slug_id: '1'
     },
     loginLoading: false
   }),
@@ -73,11 +75,11 @@ export default {
     user: {
       email: {
         required,
-        email
+        // email
       },
       password: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(6)
       }
     }
   },
@@ -87,10 +89,15 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    ...mapActions({
+      logIn: 'authStore/logIn'
+    }),
+    async onSubmit() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.loginLoading = true
+        await this.logIn(this.user)
+        this.loginLoading = false
       }
     }
   }

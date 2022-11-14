@@ -20,7 +20,12 @@
       <div class='text-center'>Max</div>
     </div>
     <div class='text-center'>
-      <b-icon class='btn-exit' font-scale='1.5' icon='box-arrow-right'/>
+      <b-icon
+        class='btn-exit'
+        font-scale='1.5'
+        icon='box-arrow-right'
+        @click='logOut'
+      />
     </div>
     <hr class='my-2'/>
     <b-button
@@ -40,6 +45,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'SideBar',
   data() {
@@ -89,6 +96,9 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    ...mapActions('authStore', ['logOut'])
   }
 }
 </script>
