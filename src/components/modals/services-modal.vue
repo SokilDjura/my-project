@@ -8,7 +8,7 @@
       <div></div>
     </template>
     <template #default>
-      <b-row class='px-2 py-2'>
+      <b-row class='px-2 py-2' @mousedown.prevent.stop>
         <b-col
           v-for='item in servicesCards' :key='item.subscription.id'
           cols='3'
@@ -62,7 +62,7 @@ export default {
         {
           subscription: {
             id: 3,
-            icon: 'person-plus-fill',
+            icon: 'person-check-fill',
             name: 'Індивідуальний абонимент',
             color: 'second-color',
           },
