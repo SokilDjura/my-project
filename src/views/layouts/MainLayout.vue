@@ -23,6 +23,7 @@ export default {
 
 <style scoped>
 .page-content {
+  background-color: #f4f4f4;
   padding-top: 80px;
   padding-left: 100px;
 }
