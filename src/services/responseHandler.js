@@ -14,6 +14,7 @@ export default (e) => {
         break
       case 422:
         type = 'warning'
+        message = e.response.data.message
         break
       case 500:
         type = 'danger'
