@@ -3,9 +3,10 @@
     <b-row class='mb-4'>
       <b-col class='col-lg-auto mb-4 mb-lg-0' cols='12'>
         <v-date-picker
-          :attributes='calendarAttrs'
+          v-model='calendarRange'
           :firstDayOfWeek='2'
           class='date-picker'
+          is-range
         />
       </b-col>
       <b-col col>
@@ -15,7 +16,11 @@
               <h4 class='text-center'>Продажі</h4>
             </b-col>
             <b-col class='col-auto p-0'>
-              <b-button class='show-more text-black py-0' variant='link'>
+              <b-button
+                class='show-more text-black py-0'
+                variant='link'
+                @click='openSalesModal'
+              >
                 <b-icon font-scale='1' icon='collection-fill'></b-icon>
               </b-button>
             </b-col>
@@ -108,7 +113,11 @@
               <h4 class='text-center'>Баланс</h4>
             </b-col>
             <b-col class='col-auto p-0'>
-              <b-button class='show-more text-black py-0' variant='link'>
+              <b-button
+                class='show-more text-black py-0'
+                variant='link'
+                @click='openBalanceModal'
+              >
                 <b-icon font-scale='1' icon='collection-fill'></b-icon>
               </b-button>
             </b-col>
@@ -218,12 +227,22 @@
         </b-card>
       </b-col>
     </b-row>
+    <sales-info-modal
+      :is-open='isSalesModalOpen'
+      @close-modal='closeSalesModal'
+    />
+    <balance-info-modal
+      :is-open='isBalanceModalOpen'
+      @close-modal='closeBalanceModal'
+    />
   </b-container>
 </template>
 
 <script>
 import { Bar, Doughnut } from 'vue-chartjs/legacy'
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
+import SalesInfoModal from '@/components/modals/sales-info-modal'
+import BalanceInfoModal from '@/components/modals/balance-info-modal'
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, BarElement, LinearScale)
 
@@ -231,21 +250,18 @@ export default {
   name: 'DashboardPage',
   components: {
     Doughnut,
-    Bar
+    Bar,
+    SalesInfoModal,
+    BalanceInfoModal
   },
   data() {
     return {
-      calendarAttrs: [
-        {
-          key: 'today',
-          highlight: {
-            color: 'purple',
-            fillMode: 'solid',
-            contentClass: 'italic'
-          },
-          dates: new Date()
-        }
-      ],
+      isSalesModalOpen: false,
+      isBalanceModalOpen: false,
+      calendarRange: {
+        start: new Date(),
+        end: new Date()
+      },
       chartData: {
         labels: ['VueJs', 'ReactJs'],
         datasets: [
@@ -303,6 +319,20 @@ export default {
           }
         }
       }
+    }
+  },
+  methods: {
+    openSalesModal() {
+      this.isSalesModalOpen = true
+    },
+    closeSalesModal() {
+      this.isSalesModalOpen = false
+    },
+    openBalanceModal() {
+      this.isBalanceModalOpen = true
+    },
+    closeBalanceModal() {
+      this.isBalanceModalOpen = false
     }
   }
 }
