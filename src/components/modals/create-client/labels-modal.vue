@@ -1,10 +1,11 @@
 <template>
   <b-modal
+    centered
     :visible='isOpen'
     no-close-on-backdrop
   >
     <template #modal-header>
-        <h3 class='mb-0'>{{ title }}</h3>
+      <h3 class='mb-0'>{{ title }}</h3>
       <b-button
         class='btn-close'
         @click="$emit('closeModal')"
@@ -12,7 +13,14 @@
       </b-button>
     </template>
     <span>Назва:</span>
-    <b-input v-model='newValue' class='mt-2'/>
+    <b-row>
+      <b-col cols='10'>
+        <b-input v-model='newValue.newValue' class='mt-2'/>
+      </b-col>
+      <b-col cols='2'>
+        <swatches class='mt-1' v-model="newValue.color" />
+      </b-col>
+    </b-row>
     <template #modal-footer>
       <b-button @click="$emit('closeModal')" variant='outline-secondary'>Скасувати</b-button>
       <b-button @click="save" variant='success'>Зберегти</b-button>
@@ -21,8 +29,11 @@
 </template>
 
 <script>
+import Swatches from 'vue-swatches'
+
 export default {
-  name: 'source-modal',
+  name: 'labels-modal',
+  components: { Swatches },
   props:{
     isOpen: {
       type: Boolean,
@@ -38,17 +49,19 @@ export default {
       required: true
     },
     valueOption:{
-      type: String,
       default: null
     },
   },
   data(){
     return{
-      newValue: null
+      newValue: {
+        newValue: null,
+        color: null
+      }
     }
   },
   watch: {
-     valueOption () {
+    valueOption () {
       this.newValue = this.valueOption
     }
   },

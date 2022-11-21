@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    centered
     :visible='isOpen'
     dialog-class='clients-model'
     no-close-on-backdrop

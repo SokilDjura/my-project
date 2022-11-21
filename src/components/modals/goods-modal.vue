@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    centered
     :visible='isOpen'
     hide-footer
     no-close-on-backdrop

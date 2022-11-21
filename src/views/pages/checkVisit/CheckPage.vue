@@ -82,7 +82,7 @@
 
 <script>
 import ShowFullDate from '@/views/pages/checkVisit/show-full-date'
-import CreateClientModal from '@/components/modals/create-client-modal'
+import CreateClientModal from '@/components/modals/create-client/create-client-modal'
 
 export default {
   name: 'CheckPage',

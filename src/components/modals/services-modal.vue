@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    centered
     dialog-class='services-model'
     :visible='isOpen'
     size='lg'

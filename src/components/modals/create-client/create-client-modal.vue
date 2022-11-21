@@ -1,6 +1,7 @@
 <template>
   <b-modal
     :visible='isOpen'
+    centered
     dialog-class='create-client-modal'
     no-close-on-backdrop
     size='xl'
@@ -101,7 +102,7 @@
                     </label>
                   </b-col>
                   <b-col cols='9'>
-                    <b-input v-model='userCard.phone'/>
+                    <b-input v-model='userCard.phone' placeholder='Номер телефону'/>
                   </b-col>
                 </b-row>
               </b-form-group>
@@ -211,9 +212,10 @@
                   <b-col cols='9'>
                     <multiselect
                       v-model='userCard.tags'
+                      :multiple='true'
                       :options='options1'
                       deselectLabel=''
-                      placeholder=''
+                      placeholder='Додати мітку'
                       selectLabel=''
                       selectedLabel=''
                     >
@@ -221,16 +223,48 @@
                         <div class='d-flex'>
                           <span>{{ option }}</span>
                           <div class='ms-auto d-flex align-items-center'>
-                            <b-icon class='gear-icon me-1' font-scale='1.2' icon='list'/>
-                            <b-icon class='gear-icon' font-scale='0.8' icon='x-lg'/>
+                            <b-icon
+                              class='gear-icon me-1'
+                              font-scale='1.2'
+                              icon='list'
+                              @click='renameLabelsModal(option)'
+                            />
+                            <b-icon class='gear-icon' font-scale='0.8' icon='x-lg' @click='deleteLabelsModal(option)'/>
                           </div>
                         </div>
                       </template>
                       <div slot='beforeList' class='px-2 py-2'>
-                        <b-button v-b-modal.modal-2 class='w-100' variant='outline-secondary'>Нове джерело</b-button>
+                        <b-button
+                          v-b-modal.modal-2
+                          class='w-100'
+                          variant='outline-secondary'
+                          @click='isAddLabelsModal = true'
+                        >Нове джерело
+                        </b-button>
                       </div>
                       <span slot='noResult'>Не знайдено жодного елемента</span>
                     </multiselect>
+                    <labels-modal
+                      :id='1'
+                      :is-open='isAddLabelsModal'
+                      title='Нова мітка'
+                      @closeModal='isAddLabelsModal = false'
+                      @save='saveLabelsModal'
+                    />
+                    <labels-modal
+                      :id='2'
+                      :is-open='isRenameLabelsModal'
+                      title='Нова мітка'
+                      @closeModal='isRenameLabelsModal = false'
+                      @save='saveLabelsModal'
+                    />
+                    <delete-options-modal
+                      :id='2'
+                      :is-open='isDeleteLabelsModal'
+                      :value-option='valueOption'
+                      title='Мітка'
+                      @closeModal='isDeleteLabelsModal = false'
+                    />
                   </b-col>
                 </b-row>
               </b-form-group>
@@ -252,16 +286,48 @@
                         <div class='d-flex'>
                           <span>{{ option }}</span>
                           <div class='ms-auto d-flex align-items-center'>
-                            <b-icon class='gear-icon me-1' font-scale='1.2' icon='list'/>
-                            <b-icon class='gear-icon' font-scale='0.8' icon='x-lg'/>
+                            <b-icon
+                              class='gear-icon me-1'
+                              font-scale='1.2'
+                              icon='list'
+                              @click='renameParentModal(option)'
+                            />
+                            <b-icon class='gear-icon' font-scale='0.8' icon='x-lg' @click='deleteParentModal(option)'/>
                           </div>
                         </div>
                       </template>
                       <div slot='beforeList' class='px-2 py-2'>
-                        <b-button v-b-modal.modal-2 class='w-100' variant='outline-secondary'>Нове джерело</b-button>
+                        <b-button
+                          v-b-modal.modal-2
+                          class='w-100'
+                          variant='outline-secondary'
+                          @click='isAddParentModal = true'
+                        >Нові батьки
+                        </b-button>
                       </div>
                       <span slot='noResult'>Не знайдено жодного елемента</span>
                     </multiselect>
+                    <parent-modal
+                      :id='1'
+                      :is-open='isAddParentModal'
+                      title='Батьки'
+                      @closeModal='isAddParentModal = false'
+                      @save='saveParentModal'
+                    />
+                    <parent-modal
+                      :id='2'
+                      :is-open='isRenameParentModal'
+                      title='Батьки'
+                      @closeModal='isRenameParentModal = false'
+                      @save='saveParentModal'
+                    />
+                    <delete-options-modal
+                      :id='2'
+                      :is-open='isDeleteParentModal'
+                      :value-option='valueOption'
+                      title='Батьки'
+                      @closeModal='isDeleteParentModal = false'
+                    />
                   </b-col>
                 </b-row>
               </b-form-group>
@@ -271,10 +337,24 @@
                     <label>Документ:</label>
                   </b-col>
                   <b-col cols='9'>
-                    <b-input v-model='userCard.documents'/>
+                    <b-input v-model='userCard.documents' placeholder='Паспорт, свідоцтво'/>
                   </b-col>
                 </b-row>
               </b-form-group>
+            </b-card>
+          </b-col>
+          <b-col cols='4'>
+            <b-card class='px-3 py-3 mb-3 card-client' no-body>
+              <img
+                :src="userCard.avatarSrc || require('@/assets/images/default-user-image.png')"
+                alt=' '
+                class='avatar'
+              >
+              <b-form-file type='button' v-model='userCard.avatar' :capture='true' class='mt-3' hide-input plain>
+                <template slot="file-name" slot-scope="">
+                  <div>names</div>
+                </template>
+              </b-form-file>
             </b-card>
           </b-col>
         </b-row>
@@ -290,15 +370,19 @@
 <script>
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
-import SourceModal from '@/components/modals/source-modal'
-import DeleteOptionsModal from '@/components/modals/delete-options-modal'
+import SourceModal from '@/components/modals/create-client/source-modal'
+import DeleteOptionsModal from '@/components/modals/create-client/delete-options-modal'
+import LabelsModal from '@/components/modals/create-client/labels-modal'
+import ParentModal from '@/components/modals/create-client/parent-modal'
 
 export default {
   name: 'create-client-modal',
   components: {
+    LabelsModal,
     Multiselect,
     SourceModal,
-    DeleteOptionsModal
+    DeleteOptionsModal,
+    ParentModal
   },
   props: {
     isOpen: {
@@ -333,14 +417,22 @@ export default {
         source: null,
         tags: null,
         parent: null,
-        documents: null
+        documents: null,
+        avatar: null,
+        avatarSrc: null
       },
       options: ['Первий', 'Другий', 'Інакший', 'Первий1', 'Другий1', 'Первий2', 'Другий2'],
-      options1: ['Первий', 'Другий', 'Інакший', 'Первий2', 'Другий2', 'Первий3', 'Другий3'],
-      options2: ['Первий', 'Другий', 'Інакший', 'Первий2'],
+      options1: ['Первий', 'Другий', 'Інакший', 'Первий2', 'Другий2'],
+      options2: ['Мама'],
       isAddSourceModal: false,
       isRenameSourceModal: false,
       isDeleteSourceModal: false,
+      isAddLabelsModal: false,
+      isRenameLabelsModal: false,
+      isDeleteLabelsModal: false,
+      isAddParentModal: false,
+      isRenameParentModal: false,
+      isDeleteParentModal: false,
       valueOption: null
     }
   },
@@ -356,6 +448,18 @@ export default {
       if (this.userCard.age < 2) this.userCard.age = null
       if (!this.userCard.birthday) this.userCard.age = null
     },
+    saveSourceModal(id, newValue, oldValue) {
+      if (id === 1) {
+        this.options.unshift(newValue)
+        this.userCard.source = newValue
+        this.isAddSourceModal = false
+      }
+      if (id === 2) {
+        console.log(oldValue)
+        // this.options = this.options.map(el => { if (el === oldValue) el = newValue })
+        this.isRenameSourceModal = false
+      }
+    },
     renameSourceModal(value) {
       this.valueOption = value
       this.isRenameSourceModal = true
@@ -364,29 +468,62 @@ export default {
       this.valueOption = value
       this.isDeleteSourceModal = true
     },
-    saveSourceModal(id, newValue, oldValue){
-      if(id === 1){
-        this.options.unshift(newValue)
-        this.userCard.source = newValue
-        this.isAddSourceModal = false
+    saveLabelsModal(id, newValue, oldValue) {
+      if (id === 1) {
+        this.options1.unshift(newValue)
+        this.userCard.tags = newValue
+        this.isAddLabelsModal = false
       }
-      if(id === 2){
-        console.log(this.options, 'options')
-        console.log(newValue, 'newValue')
-        console.log(oldValue, 'oldValue')
-        this.options.forEach((element, index) => {if (element[index] === oldValue ) {
-          element[index] = newValue
-          console.log(index)
-          console.log(element[index])} })
-        console.log(this.options, 1)
+      if (id === 2) {
+        console.log(oldValue)
         // this.options = this.options.map(el => { if (el === oldValue) el = newValue })
-        this.isRenameSourceModal = false
+        this.isRenameLabelsModal = false
       }
+    },
+    renameLabelsModal(value) {
+      this.valueOption = value
+      this.isRenameLabelsModal = true
+    },
+    deleteLabelsModal(value) {
+      this.valueOption = value
+      this.isDeleteLabelsModal = true
+    },
+    saveParentModal(id, newValue, oldValue) {
+      if (id === 1) {
+        this.options1.unshift(newValue)
+        this.userCard.tags = newValue
+        this.isAddParentModal = false
+      }
+      if (id === 2) {
+        console.log(oldValue)
+        // this.options = this.options.map(el => { if (el === oldValue) el = newValue })
+        this.isRenameParentModal = false
+      }
+    },
+    renameParentModal(value) {
+      this.valueOption = value
+      this.isRenameParentModal = true
+    },
+    deleteParentModal(value) {
+      this.valueOption = value
+      this.isDeleteParentModal = true
+    },
+    uploadPhoto(img) {
+      const reader = new FileReader()
+      reader.addEventListener('load', () => {
+        this.userCard.avatarSrc = reader.result
+      })
+      reader.readAsDataURL(img)
     }
   },
   watch: {
     'userCard.birthday'() {
       this.calculateAge()
+    },
+    'userCard.avatar'() {
+      if (this.userCard.avatar) {
+        this.uploadPhoto(this.userCard.avatar)
+      }
     }
   }
 }
@@ -442,6 +579,9 @@ export default {
 .no-active:hover {
   opacity: .8;
 }
+.avatar {
+  border-radius: 50%;
+}
 </style>
 
 <style>
@@ -462,5 +602,11 @@ export default {
 .modal-content .close {
   border: 0;
   background: transparent;
+}
+.multiselect__placeholder {
+  font-size: 15px !important;
+  color: grey !important;
+  margin-bottom: 8px;
+  padding-top: 0;
 }
 </style>

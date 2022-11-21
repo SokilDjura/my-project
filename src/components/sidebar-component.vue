@@ -38,7 +38,7 @@
       <b-icon :icon='item.icon' class='mb-1' font-scale='1.5'></b-icon>
       <small>{{ item.title }}</small>
     </b-button>
-    <b-modal id='modal-1' title='BootstrapVue'>
+    <b-modal centered id='modal-1' title='BootstrapVue'>
       <p class='my-4'>Hello from modal!</p>
     </b-modal>
   </b-sidebar>
