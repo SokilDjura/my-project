@@ -345,16 +345,81 @@
           </b-col>
           <b-col cols='4'>
             <b-card class='px-3 py-3 mb-3 card-client' no-body>
-              <img
-                :src="userCard.avatarSrc || require('@/assets/images/default-user-image.png')"
-                alt=' '
-                class='avatar'
-              >
-              <b-form-file type='button' v-model='userCard.avatar' :capture='true' class='mt-3' hide-input plain>
-                <template slot="file-name" slot-scope="">
-                  <div>names</div>
-                </template>
-              </b-form-file>
+              <div class='avatar-wrap mx-auto mb-3'>
+                <img
+                  :src="userCard.avatarSrc || require('@/assets/images/default-user-image.png')"
+                  alt=' '
+                  class='avatar'
+                >
+              </div>
+              <b-button-group class='w-75 mx-auto'>
+                <b-button>Камера</b-button>
+                <b-button class='position-relative overflow-hidden'>Файл
+                  <b-form-file v-model='userCard.avatar' class='input-file' plain type='button'/>
+                </b-button>
+              </b-button-group>
+            </b-card>
+            <b-tabs content-class='mt-3' justified>
+              <b-tab active title='Послуги'><p>I'm the first tab</p></b-tab>
+              <b-tab title='Товари'><p>I'm the second tab</p></b-tab>
+              <b-tab title='Відвідування'><p>I'm the second tab</p></b-tab>
+              <b-tab title='Запис'><p>I'm the second tab</p></b-tab>
+            </b-tabs>
+          </b-col>
+          <b-col cols='3'>
+            <b-card class='px-3 py-3 mb-3 card-client' no-body>
+              <b-form-group class='mb-2'>
+                <b-row>
+                  <b-col class='d-flex align-items-center justify-content-start pe-0' cols='5'>
+                    <label>Баланс:</label>
+                  </b-col>
+                  <b-col cols='7'>
+
+                  </b-col>
+                </b-row>
+              </b-form-group>
+              <b-form-group class='mb-2'>
+                <b-row>
+                  <b-col class='d-flex align-items-center justify-content-start pe-0' cols='5'>
+                    <label>Договір №:</label>
+                  </b-col>
+                  <b-col cols='7'>
+                    <b-input v-model='userCard.contract'/>
+                  </b-col>
+                </b-row>
+              </b-form-group>
+              <b-form-group class='mb-2'>
+                <b-row>
+                  <b-col class='d-flex align-items-center justify-content-start pe-0' cols='5'>
+                    <label>Карта №:</label>
+                  </b-col>
+                  <b-col cols='7'>
+                    <b-input v-model='userCard.cardNumber'/>
+                  </b-col>
+                </b-row>
+              </b-form-group>
+              <b-form-group class='mb-2'>
+                <b-row>
+                  <b-col class='d-flex align-items-center justify-content-start pe-0' cols='5'>
+                    <label>Знижка:</label>
+                  </b-col>
+                  <b-col cols='7'>
+                    <b-input-group>
+                      <b-input v-model='userCard.discount' class='discount-input'/>
+                      <template #append>
+                        <b-input-group-text>
+                          <span
+                            v-if='userCard.versionDiscount === 1'
+                            class='link-primary'
+                            @click='userCard.versionDiscount = 2'
+                          >%</span>
+                          <span v-else class='link-primary' @click='userCard.versionDiscount = 1'>грн.</span>
+                        </b-input-group-text>
+                      </template>
+                    </b-input-group>
+                  </b-col>
+                </b-row>
+              </b-form-group>
             </b-card>
           </b-col>
         </b-row>
@@ -419,7 +484,11 @@ export default {
         parent: null,
         documents: null,
         avatar: null,
-        avatarSrc: null
+        avatarSrc: null,
+        contract: null,
+        cardNumber: null,
+        discount: null,
+        versionDiscount: 1
       },
       options: ['Первий', 'Другий', 'Інакший', 'Первий1', 'Другий1', 'Первий2', 'Другий2'],
       options1: ['Первий', 'Другий', 'Інакший', 'Первий2', 'Другий2'],
@@ -579,8 +648,20 @@ export default {
 .no-active:hover {
   opacity: .8;
 }
-.avatar {
+.avatar-wrap {
+  position: relative;
+  overflow: hidden;
   border-radius: 50%;
+  width: 250px;
+  height: 250px;
+}
+.avatar {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
 }
 </style>
 
@@ -608,5 +689,41 @@ export default {
   color: grey !important;
   margin-bottom: 8px;
   padding-top: 0;
+}
+.input-file {
+  position: absolute;
+  width: calc(100% + 100px);
+  height: 100%;
+  top: 0;
+  left: -100px;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer !important;
+}
+.tab-content {
+  margin-top: -1px !important;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 1.25rem;
+  min-height: 274px;
+}
+.nav-link, .nav-link:hover {
+  color: #000;
+  padding: 8px 2px;
+}
+.discount-input {
+  height: 38px;
+  border-right: 0;
+}
+.input-group-text {
+  border-left: 0;
+  border-radius: 0 0.375rem 0.375rem 0;
+  height: 38px;
+  background: transparent !important;
+  cursor: pointer;
 }
 </style>
