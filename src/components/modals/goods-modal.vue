@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    centered
     :visible='isOpen'
+    centered
     hide-footer
     no-close-on-backdrop
     size='xl'

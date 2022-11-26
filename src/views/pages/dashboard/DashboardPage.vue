@@ -81,14 +81,9 @@
         lg='5'
       >
         <b-card class='doughnut-visiting-card'>
-          <b-row class='d-flex justify-content-between mb-4'>
+          <b-row class='mb-4'>
             <b-col class='p-0' col>
               <h4 class='text-center'>Відвідування</h4>
-            </b-col>
-            <b-col class='col-auto p-0'>
-              <b-button class='show-more text-black py-0' variant='link'>
-                <b-icon font-scale='1' icon='collection-fill'></b-icon>
-              </b-button>
             </b-col>
           </b-row>
           <div class='position-relative d-flex justify-content-center'>

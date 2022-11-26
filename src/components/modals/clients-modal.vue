@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    centered
     :visible='isOpen'
+    centered
     dialog-class='clients-model'
     no-close-on-backdrop
   >
@@ -11,27 +11,29 @@
       </b-col>
       <b-button
         class='btn-close'
-        @click="$emit('closeModal')"
+        @click='closeModal'
       >
       </b-button>
     </template>
     <template #default>
-        <b-button
-          class='d-flex w-100 my-1'
-          v-for='item in clientsArr' :key='item.id'
-          variant="light">
-          <div class='d-flex me-auto'>
-            <b-avatar class='me-2' size='50px' src='https://placekitten.com/300/300'></b-avatar>
-            <b-col class='me-auto'>
-              <div class='text-start'>{{ item.fullName }}</div>
-              <span>{{ item.status }}</span>
-            </b-col>
-          </div>
-          <div class='d-flex align-items-center mt-auto'>
-            <b-icon class='me-1' font-scale='0.9' icon='geo-alt-fill'/>
-            <small>{{ item.branch }}</small>
-          </div>
-        </b-button>
+      <b-button
+        v-for='item in clientsArr'
+        :key='item.id'
+        class='d-flex w-100 my-1'
+        variant='light'
+      >
+        <div class='d-flex me-auto'>
+          <b-avatar class='me-2' size='50px' src='https://placekitten.com/300/300'></b-avatar>
+          <b-col class='me-auto'>
+            <div class='text-start'>{{ item.fullName }}</div>
+            <span>{{ item.status }}</span>
+          </b-col>
+        </div>
+        <div class='d-flex align-items-center mt-auto'>
+          <b-icon class='me-1' font-scale='0.9' icon='geo-alt-fill'/>
+          <small>{{ item.branch }}</small>
+        </div>
+      </b-button>
     </template>
     <template #modal-footer>
       <b-button class='w-100' variant='outline-secondary'>Новий клієнт</b-button>
@@ -49,8 +51,8 @@ export default {
       default: false
     }
   },
-  data(){
-    return{
+  data() {
+    return {
       clientsArr: [
         {
           id: 1,
@@ -78,6 +80,11 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    closeModal() {
+      this.$emit('close-modal')
+    }
   }
 }
 </script>
@@ -89,7 +96,7 @@ export default {
 .modal-header .btn-close:hover {
   background-color: transparent !important;
 }
-.clients-model .modal-body{
+.clients-model .modal-body {
   padding: 12px 16px;
 }
 </style>

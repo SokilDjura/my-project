@@ -18,7 +18,11 @@
         </b-input-group>
       </b-col>
       <b-button-group class='button-group-wrap'>
-        <b-button class='px-4' variant='primary' @click='isServicesModalOpen=!isServicesModalOpen'>
+        <b-button
+          class='px-4'
+          variant='primary'
+          @click='openServicesModal'
+        >
           <b-icon class='me-1' icon='card-checklist'/>
           Послуга
         </b-button>
@@ -30,7 +34,11 @@
           <b-icon class='me-1' icon='basket2-fill'/>
           Товар
         </b-button>
-        <b-button class='px-4' variant='primary'>
+        <b-button
+          class='px-4'
+          variant='primary'
+          @click='openLessonModal'
+        >
           <b-icon class='me-1' icon='calendar2-event'/>
           Запись
         </b-button>
@@ -38,48 +46,56 @@
     </div>
     <services-modal
       :is-open='isServicesModalOpen'
-      @next-modal='nextModal'
+      @close-modal='closeServicesModal'
     />
     <goods-modal
       :is-open='isGoodsModalOpen'
       @close-modal='closeGoodsModal'
     />
-    <clients-modal
-      :is-open='isClientsModalOpen'
-      @close-modal='isClientsModalOpen = false'
+    <lesson-registration-modal
+      :is-open='isLessonModalOpen'
+      @close-modal='closeLessonModal'
     />
   </header>
 </template>
 
 <script>
 import ServicesModal from '@/components/modals/services-modal'
-import ClientsModal from '@/components/modals/clients-modal'
 import GoodsModal from '@/components/modals/goods-modal'
+import LessonRegistrationModal from '@/components/modals/lesson-registration-modal'
 
 export default {
   name: 'HeaderComponent',
   components: {
     ServicesModal,
-    ClientsModal,
-    GoodsModal
+    GoodsModal,
+    LessonRegistrationModal
   },
   data() {
     return {
       isServicesModalOpen: false,
-      isClientsModalOpen: false,
-      isGoodsModalOpen: false
+      isGoodsModalOpen: false,
+      isLessonModalOpen: false
     }
   },
   methods: {
-    nextModal() {
+    openServicesModal() {
+      this.isServicesModalOpen = true
+    },
+    closeServicesModal() {
       this.isServicesModalOpen = false
-      this.isClientsModalOpen = true
     },
     openGoodsModal() {
       this.isGoodsModalOpen = true
     },
     closeGoodsModal() {
       this.isGoodsModalOpen = false
+    },
+    openLessonModal() {
+      this.isLessonModalOpen = true
+    },
+    closeLessonModal() {
+      this.isLessonModalOpen = false
     }
   }
 }
