@@ -10,7 +10,7 @@
       <h3 class='mb-0'>Клієнт</h3>
       <b-button
         class='btn-close'
-        @click="$emit('closeModal')"
+        @click='closeModal'
       >
       </b-button>
     </template>
@@ -583,6 +583,9 @@ export default {
         this.userCard.avatarSrc = reader.result
       })
       reader.readAsDataURL(img)
+    },
+    closeModal() {
+      this.$emit('close-modal')
     }
   },
   watch: {

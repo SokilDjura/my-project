@@ -27,7 +27,7 @@
               <b-button
                 class='w-100'
                 variant='light'
-                @click='openClientsModal'
+                @click='getClients'
               >
                 <div class='text-center mb-1 mt-1'>
                   <b-icon
@@ -41,7 +41,7 @@
               <b-button
                 class='w-100 one-time-button'
                 variant='light'
-                @click='openClientsModal'
+                @click='getClients'
               >
                 <div class='text-center'>{{ item.oneTime.name }}</div>
               </b-button>
@@ -128,7 +128,7 @@ export default {
     }
   },
   methods: {
-    openClientsModal() {
+    getClients() {
       this.$emit('close-modal')
       this.isClientsModalOpen = true
     },

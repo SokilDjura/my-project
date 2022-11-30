@@ -9,7 +9,11 @@
           toggle-class='text-decoration-none'
           variant='link'
         >
-          <b-dropdown-item v-for='item in markType' :key='item.id' @click='openMarkType(item)'>
+          <b-dropdown-item
+            v-for='item in markType'
+            :key='item.id'
+            @click='openMarkType(item)'
+          >
             {{ item.name }}
           </b-dropdown-item>
         </b-dropdown>
@@ -31,7 +35,10 @@
             <span class='small'>{{ item.hall }}</span>
             <div class='d-flex justify-content-between align-items-center small'>
               <span>{{ item.teacher }}</span>
-              <b-icon :icon='item.icon' font-scale='0.8'/>
+              <b-icon
+                :icon='item.icon'
+                font-scale='0.8'
+              />
             </div>
           </b-card>
         </div>
@@ -41,16 +48,17 @@
       <b-card class='card-clients' no-body>
         <b-list-group flush>
           <b-list-group-item v-if='selectCard'>
-              <span class='small'>{{ selectCard.style }} {{
-                  selectCard.group.age
-                }} {{ selectCard.group.entity }} </span>
+            <span class='small'>{{ selectCard.style }} {{ selectCard.group.age }} {{ selectCard.group.entity }} </span>
             <div class='small'>
               {{ toHoursAndMinutes(selectCard.minutesBegin) }}-{{ toHoursAndMinutes(selectCard.minutesEnd) }}
             </div>
             <span class='small'>{{ selectCard.hall }}</span>
             <div class='d-flex justify-content-between align-items-center small'>
               <span>{{ selectCard.teacher }}</span>
-              <b-icon :icon='selectCard.icon' font-scale='0.8'/>
+              <b-icon
+                :icon='selectCard.icon'
+                font-scale='0.8'
+              />
             </div>
           </b-list-group-item>
           <b-list-group-item v-else>
@@ -76,7 +84,10 @@
         </b-list-group>
       </b-card>
     </b-col>
-    <create-client-modal @closeModal='isOpenCreateClient = false' :is-open='isOpenCreateClient'/>
+    <create-client-modal
+      :is-open='isOpenCreateClient'
+      @close-modal='isOpenCreateClient = false'
+    />
   </b-row>
 </template>
 
@@ -284,7 +295,7 @@ export default {
     },
     openMarkType(value) {
       if (value.id !== this.selectMarkType.id) this.selectMarkType = value
-    },
+    }
   }
 }
 </script>
@@ -293,7 +304,7 @@ export default {
 .wrap-card-1 {
   width: 95%;
 }
-.active{
+.active {
   background-color: #fc3 !important;
   width: 100%;
 }

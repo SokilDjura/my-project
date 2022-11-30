@@ -21,7 +21,7 @@
         <b-button
           class='px-4'
           variant='primary'
-          @click='openServicesModal'
+          @click='getServices'
         >
           <b-icon class='me-1' icon='card-checklist'/>
           Послуга
@@ -29,7 +29,7 @@
         <b-button
           class='header-btn-center px-4'
           variant='primary'
-          @click='openGoodsModal'
+          @click='getGoods'
         >
           <b-icon class='me-1' icon='basket2-fill'/>
           Товар
@@ -79,13 +79,13 @@ export default {
     }
   },
   methods: {
-    openServicesModal() {
+    getServices() {
       this.isServicesModalOpen = true
     },
     closeServicesModal() {
       this.isServicesModalOpen = false
     },
-    openGoodsModal() {
+    getGoods() {
       this.isGoodsModalOpen = true
     },
     closeGoodsModal() {
