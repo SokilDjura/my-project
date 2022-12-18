@@ -1,3 +1,15 @@
 body.modal-open {
   overflow: hidden;
 }
+
+.wrapped-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &-right {
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

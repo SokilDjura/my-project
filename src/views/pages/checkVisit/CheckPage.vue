@@ -1,105 +1,124 @@
 <template>
-  <b-row>
-    <b-col class='column-1'>
-      <div>
-        <b-dropdown
-          id='dropdown-left'
-          :text='selectMarkType.name'
-          no-caret
-          toggle-class='text-decoration-none'
-          variant='link'
-        >
-          <b-dropdown-item
-            v-for='item in markType'
-            :key='item.id'
-            @click='openMarkType(item)'
+  <div>
+    <b-row>
+      <b-col class='column-1'>
+        <div>
+          <b-dropdown
+            id='dropdown-left'
+            :text='selectMarkType.name'
+            no-caret
+            toggle-class='text-decoration-none'
+            variant='link'
           >
-            {{ item.name }}
-          </b-dropdown-item>
-        </b-dropdown>
-        <b-icon class='gear-icon' font-scale='1.1' icon='gear-fill'/>
-      </div>
-      <show-full-date/>
-      <div class='overflow-scroll wrapper-cards'>
-        <div class='wrap-cards'>
-          <b-card
-            v-for='item in testListCards'
-            :key='item.id'
-            :class='{active: isCardActive.value && item.id === isCardActive.id}'
-            body-class='wrap-card'
-            class='my-2 wrap-card-1 cursor-pointer'
-            @click='openCard(item)'
-          >
-            <span class='small'>{{ item.style }} {{ item.group.age }} {{ item.group.entity }} </span>
-            <div class='small'>{{ toHoursAndMinutes(item.minutesBegin) }}-{{ toHoursAndMinutes(item.minutesEnd) }}</div>
-            <span class='small'>{{ item.hall }}</span>
-            <div class='d-flex justify-content-between align-items-center small'>
-              <span>{{ item.teacher }}</span>
-              <b-icon
-                :icon='item.icon'
-                font-scale='0.8'
-              />
-            </div>
-          </b-card>
+            <b-dropdown-item
+              v-for='item in markType'
+              :key='item.id'
+              @click='openMarkType(item)'
+            >
+              {{ item.name }}
+            </b-dropdown-item>
+          </b-dropdown>
+          <b-icon class='gear-icon' font-scale='1.1' icon='gear-fill'/>
         </div>
-      </div>
-    </b-col>
-    <b-col class='column-2' cols='4'>
-      <b-card class='card-clients' no-body>
-        <b-list-group flush>
-          <b-list-group-item v-if='selectCard'>
-            <span class='small'>{{ selectCard.style }} {{ selectCard.group.age }} {{ selectCard.group.entity }} </span>
-            <div class='small'>
-              {{ toHoursAndMinutes(selectCard.minutesBegin) }}-{{ toHoursAndMinutes(selectCard.minutesEnd) }}
-            </div>
-            <span class='small'>{{ selectCard.hall }}</span>
-            <div class='d-flex justify-content-between align-items-center small'>
-              <span>{{ selectCard.teacher }}</span>
+        <show-full-date/>
+        <div class='overflow-scroll wrapper-cards'>
+          <div class='wrap-cards'>
+            <b-card
+              v-for='item in testListCards'
+              :key='item.id'
+              :class='{active: isCardActive.value && item.id === isCardActive.id}'
+              body-class='wrap-card'
+              class='my-2 wrap-card-1 cursor-pointer'
+              @click='openCard(item)'
+            >
+              <span class='small'>{{ item.style }} {{ item.group.age }} {{ item.group.entity }} </span>
+              <div class='small'>{{ toHoursAndMinutes(item.minutesBegin) }}-{{
+                  toHoursAndMinutes(item.minutesEnd)
+                }}
+              </div>
+              <span class='small'>{{ item.hall }}</span>
+              <div class='d-flex justify-content-between align-items-center small'>
+                <span>{{ item.teacher }}</span>
+                <b-icon
+                  :icon='item.icon'
+                  font-scale='0.8'
+                />
+              </div>
+            </b-card>
+          </div>
+        </div>
+      </b-col>
+      <b-col class='column-2' cols='4'>
+        <b-card class='card-clients' no-body>
+          <b-list-group flush>
+            <b-list-group-item v-if='selectCard'>
+              <span class='small'>{{ selectCard.style }} {{ selectCard.group.age }} {{
+                  selectCard.group.entity
+                }} </span>
+              <div class='small'>
+                {{ toHoursAndMinutes(selectCard.minutesBegin) }}-{{ toHoursAndMinutes(selectCard.minutesEnd) }}
+              </div>
+              <span class='small'>{{ selectCard.hall }}</span>
+              <div class='d-flex justify-content-between align-items-center small'>
+                <span>{{ selectCard.teacher }}</span>
+                <b-icon
+                  :icon='selectCard.icon'
+                  font-scale='0.8'
+                />
+              </div>
+            </b-list-group-item>
+            <b-list-group-item v-else>
+              <h6 class='mb-0 text-center'>Відвідування</h6>
               <b-icon
-                :icon='selectCard.icon'
-                font-scale='0.8'
+                class='cursor-pointer'
+                font-scale='1.3'
+                icon='credit-card2-front-fill'
+                @click='openSubscriptionModal'
               />
-            </div>
-          </b-list-group-item>
-          <b-list-group-item v-else>
-            <h6 class='mb-0 text-center'>Відвідування</h6>
-          </b-list-group-item>
-          <b-list-group-item class='px-0 py-0'>
-            <b-input-group>
-              <b-input class='search-input' placeholder='Для пошуку по всім клієнтам нажміть Enter'/>
-              <template #append>
-                <b-input-group-text @click='isOpenCreateClient = true'>
-                  <b-icon class='mx-2' font-scale='1.4' icon='person-plus-fill'/>
-                </b-input-group-text>
-              </template>
-            </b-input-group>
-          </b-list-group-item>
-          <b-list-group-item class='px-2'>
-            <div class='empty'>
-              Виберіть заняття для позначення відвідувань. <br><br>
-              Для позначення відвідування наведіть вказівник миші на клієнта та натисніть на галочку праворуч від
-              клієнта.
-            </div>
-          </b-list-group-item>
-        </b-list-group>
-      </b-card>
-    </b-col>
+            </b-list-group-item>
+            <b-list-group-item class='px-0 py-0'>
+              <b-input-group>
+                <b-input class='search-input' placeholder='Для пошуку по всім клієнтам нажміть Enter'/>
+                <template #append>
+                  <b-input-group-text @click='isCreateClientModalOpen = true'>
+                    <b-icon class='mx-2' font-scale='1.4' icon='person-plus-fill'/>
+                  </b-input-group-text>
+                </template>
+              </b-input-group>
+            </b-list-group-item>
+            <b-list-group-item class='px-2'>
+              <div class='empty'>
+                Виберіть заняття для позначення відвідувань. <br><br>
+                Для позначення відвідування наведіть вказівник миші на клієнта та натисніть на галочку праворуч від
+                клієнта.
+              </div>
+            </b-list-group-item>
+          </b-list-group>
+        </b-card>
+      </b-col>
+    </b-row>
     <create-client-modal
-      :is-open='isOpenCreateClient'
-      @close-modal='isOpenCreateClient = false'
+      :is-open='isCreateClientModalOpen'
+      @close-modal='isCreateClientModalOpen = false'
     />
-  </b-row>
+    <subscription-renewal-modal
+      :is-open='isSubscriptionModalOpen'
+      @close-modal='closeSubscriptionModal'
+    />
+  </div>
 </template>
 
 <script>
 import ShowFullDate from '@/views/pages/checkVisit/show-full-date'
 import CreateClientModal from '@/components/modals/create-client/create-client-modal'
+import SubscriptionRenewalModal from '@/components/modals/subscription-renewal-modal'
 
 export default {
   name: 'CheckPage',
   components: {
     ShowFullDate,
-    CreateClientModal
+    CreateClientModal,
+    SubscriptionRenewalModal
   },
   data() {
     return {
@@ -273,7 +292,8 @@ export default {
         value: false,
         id: null
       },
-      isOpenCreateClient: false
+      isCreateClientModalOpen: false,
+      isSubscriptionModalOpen: false
     }
   },
   methods: {
@@ -295,6 +315,12 @@ export default {
     },
     openMarkType(value) {
       if (value.id !== this.selectMarkType.id) this.selectMarkType = value
+    },
+    openSubscriptionModal() {
+      this.isSubscriptionModalOpen = true
+    },
+    closeSubscriptionModal() {
+      this.isSubscriptionModalOpen = false
     }
   }
 }
