@@ -4,11 +4,17 @@
       :visible='isOpen'
       centered
       dialog-class='services-model'
+      no-close-on-backdrop
       hide-footer
       size='lg'
     >
       <template #modal-header>
-        <div></div>
+        <h5 class='modal-title'>Послуги</h5>
+        <b-button
+          class='btn-close'
+          @click='closeModal'
+        >
+        </b-button>
       </template>
       <template #default>
         <b-row
@@ -134,6 +140,9 @@ export default {
     },
     closeClientsModal() {
       this.isClientsModalOpen = false
+    },
+    closeModal() {
+      this.$emit('close-modal')
     }
   }
 }
@@ -161,10 +170,6 @@ export default {
 
 </style>
 <style>
-.services-model .modal-content .modal-header {
-  display: none !important;
-  border-bottom: 0 !important;
-}
 .services-model .modal-content .modal-footer {
   display: none !important;
   border-top: 0 !important;

@@ -88,18 +88,23 @@
       :is-open='isOpenCreateClient'
       @close-modal='isOpenCreateClient = false'
     />
+    <b-col class='column-3' cols='5'>
+      <client-card/>
+    </b-col>
   </b-row>
 </template>
 
 <script>
 import ShowFullDate from '@/views/pages/checkVisit/show-full-date'
 import CreateClientModal from '@/components/modals/create-client/create-client-modal'
+import ClientCard from '@/views/pages/checkVisit/client-card'
 
 export default {
   name: 'CheckPage',
   components: {
     ShowFullDate,
-    CreateClientModal
+    CreateClientModal,
+    ClientCard
   },
   data() {
     return {

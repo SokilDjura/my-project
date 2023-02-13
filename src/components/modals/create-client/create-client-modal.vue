@@ -421,6 +421,22 @@
                 </b-row>
               </b-form-group>
             </b-card>
+            <div class='comment-box'>
+              <b-button
+                v-if='!showCommentBox'
+                variant='link'
+                @click='showCommentBox = !showCommentBox'
+              >
+                Додати коментар
+              </b-button>
+              <b-form-textarea
+                v-else
+                v-model='userCard.comment'
+                no-resize
+                placeholder='Коментар'
+                class='mt-3'
+              ></b-form-textarea>
+            </div>
           </b-col>
         </b-row>
       </b-form>
@@ -488,7 +504,8 @@ export default {
         contract: null,
         cardNumber: null,
         discount: null,
-        versionDiscount: 1
+        versionDiscount: 1,
+        comment: null
       },
       options: ['Первий', 'Другий', 'Інакший', 'Первий1', 'Другий1', 'Первий2', 'Другий2'],
       options1: ['Первий', 'Другий', 'Інакший', 'Первий2', 'Другий2'],
@@ -502,7 +519,8 @@ export default {
       isAddParentModal: false,
       isRenameParentModal: false,
       isDeleteParentModal: false,
-      valueOption: null
+      valueOption: null,
+      showCommentBox: false
     }
   },
   methods: {
@@ -728,5 +746,8 @@ export default {
   height: 38px;
   background: transparent !important;
   cursor: pointer;
+}
+.row {
+  --bs-gutter-x: 1rem !important;
 }
 </style>
